@@ -305,7 +305,6 @@ int timeout_connect(int sockfd, const struct sockaddr *addr,
             int rv;
             fd_set wfds;
             struct timeval tv;
-            size_t l;
 
             /* set up select time out */
             tv.tv_sec = timeout;
@@ -324,7 +323,7 @@ int timeout_connect(int sockfd, const struct sockaddr *addr,
                 got_error = -1;
             default:
                 /* we got connected, check error condition */
-                l = sizeof(rv);
+                socklen_t l = sizeof(rv);
                 getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &rv, &l);
                 if (rv) {
                     /* something went wrong, simulate normal connect behaviour */
